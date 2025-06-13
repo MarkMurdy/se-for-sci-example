@@ -6,7 +6,6 @@ on:
       - main
 
 
-
 jobs:
   hello:
     name: My first job
@@ -14,5 +13,20 @@ jobs:
     steps:
       - name:
         run: echo "Hello world"
-      - name: My second step
-        run: mkdir -z test
+
+  test:
+    name: Run tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5 # this is a comment
+        with:
+          python-version: '3.13'
+      - name: Install package
+        run: pip install .[test]
+      - name: Run Pytest
+        run: python -m pytest -v
+
+
